@@ -29,8 +29,8 @@ export default function RegisterToCensus() {
   const [infofamily, setinfofamily] = useState([]);
   const [censusmsg, setcensusmsg] = useState();
   const [familyMembers, setfamilyMembers] = useState([]);
-  const [id,setId] = useState('');
-  console.log('family cnin',infofamily)
+  const [id, setId] = useState('');
+  console.log('family cnin', infofamily)
   // console.log('cnin',cnic
   // console.log('family info--', infofamily)
   // console.log('infoId--', id)
@@ -40,8 +40,8 @@ export default function RegisterToCensus() {
   //       console.log("mapInfo",v)
   //   });
   // }, [familyMembers])
-  
-  
+
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -49,7 +49,7 @@ export default function RegisterToCensus() {
     languages: [],
     response: [],
   });
-   function handleChange(e) {
+  function handleChange(e) {
     const { value, checked } = e.target;
     const { languages } = userinfo;
 
@@ -62,9 +62,9 @@ export default function RegisterToCensus() {
   }
   function addtoCensus(e) {
     e.preventDefault();
-      if (withFamily == true) {
-        try {
-          axios
+    if (withFamily == true) {
+      try {
+        axios
           .put(
             `https://census-app-rehanpardesi2018-gmailcom.vercel.app/api/add_to_Census_My_family`,
             {
@@ -73,22 +73,22 @@ export default function RegisterToCensus() {
             }
           )
           .then((res) => {
-            console.log("checkNic",res);
+            console.log("checkNic", res);
             if (res.status == 200 && res.data.success == true) {
               setfamilyMembers([]);
               setOpen(true)
-            }else{
+            } else {
               setcensusmsg(res.data.msg)
             }
           })
-        } catch (error) {
-          // setcensusmsg(err.message);
-          console.log('error',error)
-          setcensusmsg(error)
-        }
-      } else {
-        try {
-          axios
+      } catch (error) {
+        // setcensusmsg(err.message);
+        console.log('error', error)
+        setcensusmsg(error)
+      }
+    } else {
+      try {
+        axios
           .put(
             `https://census-app-rehanpardesi2018-gmailcom.vercel.app/api/add_to_Census_Myself`,
             {
@@ -96,19 +96,19 @@ export default function RegisterToCensus() {
             }
           )
           .then((res) => {
-            console.log("checkResdata",res);
+            console.log("checkResdata", res);
             if (res.status == 200 && res.data.success == true) {
               setOpen(true);
-              console.log('census test',res)
-            }else{
+              console.log('census test', res)
+            } else {
               setcensusmsg(res.data.msg)
             }
           })
-        } catch (error) {
-          console.log('error---',error)
-          setcensusmsg(error)
-        }
+      } catch (error) {
+        console.log('error---', error)
+        setcensusmsg(error)
       }
+    }
   }
   function searchCnic(e) {
     e.preventDefault();
@@ -122,26 +122,26 @@ export default function RegisterToCensus() {
         }
       )
       .then((res) => {
-        console.log("getNIcData",res);
+        console.log("getNIcData", res);
         // console.log(res.data.personData);
         console.log("familyInfo", infofamily);
         if (withFamily == true) {
           setinfofamily(res?.data?.personData);
           // setId(res.data.personData._id);
-          console.log("getNIcData",res.data.personData.familyMembers._id);
-          
+          console.log("getNIcData", res.data.personData.familyMembers._id);
+
         } else {
           setinfo(res.data.personData);
         }
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err.message);
-        setcensusmsg(err.message+" (May be CNIC, Issue date or Expiry date are wrong)")
+        setcensusmsg(err.message + " (May be CNIC, Issue date or Expiry date are wrong)")
       });
   }
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  console.log("Idinfofamily",infofamily)
+  console.log("Idinfofamily", infofamily)
 
-  
+
   return (
     <Sidebar>
       <div className={styles.register}>
@@ -268,7 +268,7 @@ export default function RegisterToCensus() {
             Confirm
           </button>
         </div>
-        <p style={{color: 'red'}}>{censusmsg}</p>
+        <p style={{ color: 'red' }}>{censusmsg}</p>
       </div>
       <Modal
         open={open}
@@ -281,7 +281,7 @@ export default function RegisterToCensus() {
             Welldone !
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Successfully registered in Census
+            Successfully registered in Census
           </Typography>
         </Box>
       </Modal>
